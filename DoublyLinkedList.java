@@ -99,17 +99,15 @@ public class DoublyLinkedList {
             middleItem = head.data;
             return middleItem;
         }else{
+            newHead = newHead.next;
+            newTail = newTail.prev;
             if (size % 2 == 0) {
-                newHead = newHead.next;
-                newTail = newTail.prev;
                 newTail = newTail.prev;
                 while (newHead != newTail) {
                     newHead = newHead.next;
                     newTail = newTail.prev;
                 }
             }else{
-                newHead = newHead.next;
-                newTail = newTail.prev;
                 while (newHead != newTail) {
                     newHead = newHead.next;
                     newTail = newTail.prev;
@@ -126,6 +124,31 @@ public class DoublyLinkedList {
 
 
     }
+
+    //method to find middle without using size
+    //if even it should choose left to be mid
+    public int findMiddle2() {
+        if (head == null) {
+            System.out.println("Empty list. Cannot find middle.");
+            return - 1;
+        }
+
+        Node slow = head;
+        Node fast = head.next; 
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        int middleItem = slow.data;
+
+        return middleItem;
+
+    }
+
+
+
+    
 
     DoublyLinkedList() {
         this.head = null;
@@ -147,20 +170,21 @@ public class DoublyLinkedList {
         doublyLinkedList.addFirst(10);
         doublyLinkedList.addFirst(20);
         doublyLinkedList.addFirst(30);
-
-        doublyLinkedList.printList();
-
+        
         doublyLinkedList.addLast(40);
         doublyLinkedList.addLast(50);
         doublyLinkedList.addLast(60);
+        doublyLinkedList.addLast(70);
 
+        
+        
         doublyLinkedList.printList();
-
-        doublyLinkedList.removeFirst();
+       
 
         
 
-       int middleItem = doublyLinkedList.findMiddle();
+    //    int middleItem = doublyLinkedList.findMiddle();
+            int middleItem = doublyLinkedList.findMiddle2();
        System.out.println(middleItem);
     }
 }
