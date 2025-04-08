@@ -1,23 +1,23 @@
-public class DoublyLinkedList {
-    Node head;
-    Node tail;
+public class DoublyLinkedList<T> {
+    Node<T> head;
+    Node<T> tail;
     int size;
 
-    public class Node {
-        int data;
-        Node next;
-        Node prev;
+    public static class Node<T> {
+        T data;
+        Node<T> next;
+        Node<T> prev;
 
-        Node(int data, Node prev, Node next) {
+        Node(T data, Node<T> prev, Node<T> next) {
             this.data = data;
             this.prev = prev;
             this.next = next;
         }
     }
 
-    //method to addFirst
-    public void addFirst(int data) {
-        Node newNode = new Node(data, null, null);
+    // Method to addFirst
+    public void addFirst(T data) {
+        Node<T> newNode = new Node<>(data, null, null);
 
         if (size == 0) {
             tail = newNode;
@@ -27,17 +27,15 @@ public class DoublyLinkedList {
         }
         head = newNode;
         size++;
-
     }
 
-    //method to addLast
-    public void addLast(int data) {
-        Node newNode = new Node(data, null, null);
-        if(size == 0) {
-            //same as addFirst
+    // Method to addLast
+    public void addLast(T data) {
+        Node<T> newNode = new Node<>(data, null, null);
+        if (size == 0) {
+            // Same as addFirst
             head = newNode;
-            
-        }else{
+        } else {
             tail.next = newNode;
             newNode.prev = tail;
         }
@@ -45,17 +43,17 @@ public class DoublyLinkedList {
         size++;
     }
 
-    //method to removeFirst
-    public int removeFirst() {
-        if(size == 0) {
+    // Method to removeFirst
+    public T removeFirst() {
+        if (size == 0) {
             System.out.println("Empty List. Cannot remove first element.");
-            return -1;
+            return null;
         }
-        int removedItem = head.data;
+        T removedItem = head.data;
         if (size == 1) {
             head = null;
             tail = null;
-        }else{
+        } else {
             head = head.next;
             head.prev = null;
         }
@@ -63,42 +61,43 @@ public class DoublyLinkedList {
         return removedItem;
     }
 
-    //method to removeLast
-    public int removeLast() {
-        if(size == 0) {
-            System.out.println("Empty List. Cannot remove first element.");
-            return -1;
+    // Method to removeLast
+    public T removeLast() {
+        if (size == 0) {
+            System.out.println("Empty List. Cannot remove last element.");
+            return null;
         }
-        int removedItem = tail.data;
+        T removedItem = tail.data;
         if (size == 1) {
             head = null;
             tail = null;
-        }else{
-            tail= tail.prev;
+        } else {
+            tail = tail.prev;
             tail.next = null;
         }
         size--;
         return removedItem;
     }
 
-    //method to find the middle node without using size
-    //using link hopping or traversal
-    public int findMiddle() {
-        //create two temporary pointers
-        //this node pointers will be moved
-        //to meet at the center point
-        Node newHead = head;
-        Node newTail = tail;
+    // Method to find the middle node without using size
+    // Using link hopping or traversal
+    public T findMiddle() {
+        // Create two temporary pointers
+        // These node pointers will be moved
+        // to meet at the center point
+        Node<T> newHead = head;
+        Node<T> newTail = tail;
 
         if (size == 0) {
             System.out.println("Empty list. Cannot find middle item.");
-            return -1;
+            return null;
         }
-        int middleItem;
+        
+        T middleItem;
         if (size == 1 || size == 2) {
             middleItem = head.data;
             return middleItem;
-        }else{
+        } else {
             newHead = newHead.next;
             newTail = newTail.prev;
             if (size % 2 == 0) {
@@ -107,48 +106,36 @@ public class DoublyLinkedList {
                     newHead = newHead.next;
                     newTail = newTail.prev;
                 }
-            }else{
+            } else {
                 while (newHead != newTail) {
                     newHead = newHead.next;
                     newTail = newTail.prev;
                 }
-
             }
-            
-           
-            
         }
         middleItem = newHead.data;
         return middleItem;
-
-
-
     }
 
-    //method to find middle without using size
-    //if even it should choose left to be mid
-    public int findMiddle2() {
+    // Method to find middle without using size
+    // If even it should choose left to be mid
+    public T findMiddle2() {
         if (head == null) {
             System.out.println("Empty list. Cannot find middle.");
-            return - 1;
+            return null;
         }
 
-        Node slow = head;
-        Node fast = head.next; 
+        Node<T> slow = head;
+        Node<T> fast = head.next;
 
         while (fast != null && fast.next != null) {
             slow = slow.next;
             fast = fast.next.next;
         }
-        int middleItem = slow.data;
+        T middleItem = slow.data;
 
         return middleItem;
-
     }
-
-
-
-    
 
     DoublyLinkedList() {
         this.head = null;
@@ -157,7 +144,7 @@ public class DoublyLinkedList {
     }
 
     public void printList() {
-        Node current = head;
+        Node<T> current = head;
         while (current != null) {
             System.out.print(current.data + " ->");
             current = current.next;
@@ -166,25 +153,36 @@ public class DoublyLinkedList {
     }
 
     public static void main(String[] args) {
-        DoublyLinkedList doublyLinkedList = new DoublyLinkedList();
-        doublyLinkedList.addFirst(10);
-        doublyLinkedList.addFirst(20);
-        doublyLinkedList.addFirst(30);
+        // Example with Integer
+        DoublyLinkedList<Integer> intList = new DoublyLinkedList<>();
+        intList.addFirst(10);
+        intList.addFirst(20);
+        intList.addFirst(30);
         
-        doublyLinkedList.addLast(40);
-        doublyLinkedList.addLast(50);
-        doublyLinkedList.addLast(60);
-        doublyLinkedList.addLast(70);
-
+        intList.addLast(40);
+        intList.addLast(50);
+        intList.addLast(60);
+        intList.addLast(70);
         
+        System.out.println("Integer list:");
+        intList.printList();
         
-        doublyLinkedList.printList();
-       
-
+        Integer middleItem = intList.findMiddle2();
+        System.out.println("Middle item: " + middleItem);
         
-
-    //    int middleItem = doublyLinkedList.findMiddle();
-            int middleItem = doublyLinkedList.findMiddle2();
-       System.out.println(middleItem);
+        // Example with String
+        DoublyLinkedList<String> stringList = new DoublyLinkedList<>();
+        stringList.addFirst("Apple");
+        stringList.addFirst("Banana");
+        stringList.addFirst("Cherry");
+        
+        stringList.addLast("Date");
+        stringList.addLast("Elderberry");
+        
+        System.out.println("\nString list:");
+        stringList.printList();
+        
+        String middleString = stringList.findMiddle2();
+        System.out.println("Middle item: " + middleString);
     }
 }
